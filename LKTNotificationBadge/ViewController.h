@@ -26,8 +26,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LKTHorizontalTableView.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <LKTHorizontalTableViewDelegate>
 
 
 @end
