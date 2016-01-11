@@ -13,6 +13,8 @@
 		C0BCB3C51C43D36100E56E7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0BCB3C31C43D36100E56E7B /* Main.storyboard */; };
 		C0BCB3C71C43D36100E56E7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0BCB3C61C43D36100E56E7B /* Assets.xcassets */; };
 		C0BCB3CA1C43D36100E56E7B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0BCB3C81C43D36100E56E7B /* LaunchScreen.storyboard */; };
+		C0BCB3D61C43DA7400E56E7B /* LKTHorizontalTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BCB3D51C43DA7400E56E7B /* LKTHorizontalTableView.m */; };
+		C0BCB3D91C43DAA800E56E7B /* LKTTileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BCB3D81C43DAA800E56E7B /* LKTTileCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,10 @@
 		C0BCB3C61C43D36100E56E7B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C0BCB3C91C43D36100E56E7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C0BCB3CB1C43D36100E56E7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C0BCB3D41C43DA7400E56E7B /* LKTHorizontalTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTHorizontalTableView.h; sourceTree = "<group>"; };
+		C0BCB3D51C43DA7400E56E7B /* LKTHorizontalTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTHorizontalTableView.m; sourceTree = "<group>"; };
+		C0BCB3D71C43DAA800E56E7B /* LKTTileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTTileCell.h; sourceTree = "<group>"; };
+		C0BCB3D81C43DAA800E56E7B /* LKTTileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTTileCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,10 +64,14 @@
 		C0BCB3B91C43D36100E56E7B /* LKTNotificationBadge */ = {
 			isa = PBXGroup;
 			children = (
+				C0BCB3D21C43DA2100E56E7B /* LKTNotificationBadge */,
+				C0BCB3D11C43DA1500E56E7B /* Dependencies */,
 				C0BCB3BD1C43D36100E56E7B /* AppDelegate.h */,
 				C0BCB3BE1C43D36100E56E7B /* AppDelegate.m */,
 				C0BCB3C01C43D36100E56E7B /* ViewController.h */,
 				C0BCB3C11C43D36100E56E7B /* ViewController.m */,
+				C0BCB3D71C43DAA800E56E7B /* LKTTileCell.h */,
+				C0BCB3D81C43DAA800E56E7B /* LKTTileCell.m */,
 				C0BCB3C31C43D36100E56E7B /* Main.storyboard */,
 				C0BCB3C61C43D36100E56E7B /* Assets.xcassets */,
 				C0BCB3C81C43D36100E56E7B /* LaunchScreen.storyboard */,
@@ -77,6 +87,30 @@
 				C0BCB3BB1C43D36100E56E7B /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C0BCB3D11C43DA1500E56E7B /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				C0BCB3D31C43DA7400E56E7B /* LKTHorizontalTableView */,
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
+		C0BCB3D21C43DA2100E56E7B /* LKTNotificationBadge */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LKTNotificationBadge;
+			sourceTree = "<group>";
+		};
+		C0BCB3D31C43DA7400E56E7B /* LKTHorizontalTableView */ = {
+			isa = PBXGroup;
+			children = (
+				C0BCB3D41C43DA7400E56E7B /* LKTHorizontalTableView.h */,
+				C0BCB3D51C43DA7400E56E7B /* LKTHorizontalTableView.m */,
+			);
+			path = LKTHorizontalTableView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,8 +184,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0BCB3C21C43D36100E56E7B /* ViewController.m in Sources */,
+				C0BCB3D91C43DAA800E56E7B /* LKTTileCell.m in Sources */,
 				C0BCB3BF1C43D36100E56E7B /* AppDelegate.m in Sources */,
 				C0BCB3BC1C43D36100E56E7B /* main.m in Sources */,
+				C0BCB3D61C43DA7400E56E7B /* LKTHorizontalTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
