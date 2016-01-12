@@ -30,44 +30,44 @@
         isTextLanguageRightToLeft:(BOOL)isTextLanguageRightToLeft
                        tag:(NSUInteger)tag
              insideContainer:(BOOL)insideContainer
-               withAlignment:(DBZAlignment)alignment {
+               withAlignment:(LKTNotificationBadgeAlignment)alignment {
   CGRect superViewframe = superView.frame;
   CGFloat interMargin = 5.f;
   
   UILabel *labelText;
-  if (alignment == DBZAlignmentLeft && insideContainer)
+  if (alignment == LKTNotificationBadgeAlignmentLeft && insideContainer)
     labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
-                                                          superViewframe.size.width - TagWidth :
+                                                          superViewframe.size.width - LKTNotificationBadgeTagWidth :
                                                           0,
                                                           5,
-                                                          TagWidth,
-                                                          TagHeight)];
-  else if (alignment == DBZAlignmentLeft && !insideContainer)
+                                                          LKTNotificationBadgeTagWidth,
+                                                          LKTNotificationBadgeTagHeight)];
+  else if (alignment == LKTNotificationBadgeAlignmentLeft && !insideContainer)
     labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
                                                           superViewframe.size.width :
-                                                          -TagWidth - interMargin,
+                                                          -LKTNotificationBadgeTagWidth - interMargin,
                                                           5,
-                                                          TagWidth,
-                                                          TagHeight)];
-  else if (alignment == DBZAlignmentRight && insideContainer)
+                                                          LKTNotificationBadgeTagWidth,
+                                                          LKTNotificationBadgeTagHeight)];
+  else if (alignment == LKTNotificationBadgeAlignmentRight && insideContainer)
     labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
                                                           0 :
-                                                          superViewframe.size.width - TagWidth,
+                                                          superViewframe.size.width - LKTNotificationBadgeTagWidth,
                                                           5,
-                                                          TagWidth,
-                                                          TagHeight)];
-  else if (alignment == DBZAlignmentRight && !insideContainer)
+                                                          LKTNotificationBadgeTagWidth,
+                                                          LKTNotificationBadgeTagHeight)];
+  else if (alignment == LKTNotificationBadgeAlignmentRight && !insideContainer)
     labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
-                                                           -TagWidth - interMargin :
+                                                           -LKTNotificationBadgeTagWidth - interMargin :
                                                           superViewframe.size.width + interMargin,
                                                           5,
-                                                          TagWidth,
-                                                          TagHeight)];
+                                                          LKTNotificationBadgeTagWidth,
+                                                          LKTNotificationBadgeTagHeight)];
   else
-    labelText = [[UILabel alloc] initWithFrame:CGRectMake(superViewframe.size.width / 2 - TagWidth / 2,
+    labelText = [[UILabel alloc] initWithFrame:CGRectMake(superViewframe.size.width / 2 - LKTNotificationBadgeTagWidth / 2,
                                                           5,
-                                                          TagWidth,
-                                                          TagHeight)];
+                                                          LKTNotificationBadgeTagWidth,
+                                                          LKTNotificationBadgeTagHeight)];
   
   labelText.textColor = UIColor.whiteColor;
   labelText.textAlignment = NSTextAlignmentCenter;

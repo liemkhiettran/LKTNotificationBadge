@@ -121,7 +121,7 @@
                                          isTextLanguageRightToLeft:NO
                                                                tag:tile.labelTitle.text.longLongValue
                                                    insideContainer:NO
-                                                     withAlignment:DBZAlignmentRight]];
+                                                     withAlignment:LKTNotificationBadgeAlignmentRight]];
   
   
   return tile;

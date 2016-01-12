@@ -8,15 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-#define TagWidth 40.f
-#define TagHeight 17.f
-#define kLabelTextNewFeatureTag 824
+#define LKTNotificationBadgeTagWidth 40.f
+#define LKTNotificationBadgeTagHeight 17.f
 
 /* Values for DBZAlignment */
-typedef NS_ENUM(NSInteger, DBZAlignment) {
-  DBZAlignmentLeft      = 0,    // Visually left aligned
-  DBZAlignmentCenter    = 1,    // Visually centered
-  DBZAlignmentRight     = 2,    // Visually right aligned
+typedef NS_ENUM(NSInteger, LKTNotificationBadgeAlignment) {
+  LKTNotificationBadgeAlignmentLeft      = 0,    // Visually left aligned
+  LKTNotificationBadgeAlignmentCenter    = 1,    // Visually centered
+  LKTNotificationBadgeAlignmentRight     = 2,    // Visually right aligned
 };
 
 @interface UIView (LKTNotificationBadge)
@@ -41,5 +40,5 @@ typedef NS_ENUM(NSInteger, DBZAlignment) {
         isTextLanguageRightToLeft:(BOOL)isTextLanguageRightToLeft
                        tag:(NSUInteger)tag
              insideContainer:(BOOL)insideContainer
-               withAlignment:(DBZAlignment)alignment;
+               withAlignment:(LKTNotificationBadgeAlignment)alignment;
 @end
