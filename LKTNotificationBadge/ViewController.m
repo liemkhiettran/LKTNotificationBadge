@@ -27,13 +27,15 @@
 
 #import "ViewController.h"
 #import "LKTTileCell.h"
+#import "UIView+LKTNotificationBadge.h"
 
 @interface ViewController ()
 
-@property (strong, nonatomic) LKTHorizontalTableView *tableViewTo50;
-@property (strong, nonatomic) LKTHorizontalTableView *tableViewTo100;
-@property (strong, nonatomic) NSMutableArray *arrayFiguresTo50;
-@property (strong, nonatomic) NSMutableArray *arrayFiguresTo100;
+@property (strong, nonatomic) LKTHorizontalTableView *tableViewTo4;
+
+@property (strong, nonatomic) NSMutableArray *arrayFiguresTo4;
+@property (strong, nonatomic) NSMutableArray *mutableArrayTilesSelected;
+@property (strong, nonatomic) NSMutableArray *mutableArrayBadgesViews;
 
 @property (strong, nonatomic) LKTTileCell *tileCell;
 
@@ -45,72 +47,33 @@
   [super viewDidLoad];
   // Do any additional setup after loading the view, typically from a nib.
   
-  _arrayFiguresTo50 = [NSMutableArray array];
+  _mutableArrayTilesSelected = [NSMutableArray array];
+  _mutableArrayBadgesViews = [NSMutableArray array];
+  _arrayFiguresTo4 = [NSMutableArray array];
+  
   NSUInteger step = 2;
   NSUInteger i = 0;
-  while (i < 50) {
-    [_arrayFiguresTo50 addObject:[NSString stringWithFormat:@"%ld", i]];
+  while (i < 10) {
+    [_arrayFiguresTo4 addObject:[NSString stringWithFormat:@"%ld", i]];
     i += step;
   }
   
-  _arrayFiguresTo100 = [NSMutableArray array];
-  while (i < 100) {
-    [_arrayFiguresTo100 addObject:[NSString stringWithFormat:@"%ld", i]];
-    i += step;
-  }
+  _tableViewTo4 = [[LKTHorizontalTableView alloc] init];
+  _tableViewTo4.translatesAutoresizingMaskIntoConstraints = NO;
+  _tableViewTo4.tag = 4;
+  _tableViewTo4.delegate = self;
+  [self.view addSubview:_tableViewTo4];
   
-  _tableViewTo50 = [[LKTHorizontalTableView alloc] init];
-  _tableViewTo50.translatesAutoresizingMaskIntoConstraints = NO;
-  _tableViewTo50.tag = 50;
-  _tableViewTo50.delegate = self;
-  [self.view addSubview:_tableViewTo50];
-  
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_tableViewTo50]-0-|"
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_tableViewTo4]-0-|"
                                                                     options:NSLayoutFormatDirectionLeftToRight
                                                                     metrics:nil
-                                                                      views:NSDictionaryOfVariableBindings(_tableViewTo50)]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_tableViewTo50(150)]-0-|"
+                                                                      views:NSDictionaryOfVariableBindings(_tableViewTo4)]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_tableViewTo4(150)]-0-|"
                                                                     options:NSLayoutFormatDirectionLeftToRight
                                                                     metrics:nil
-                                                                      views:NSDictionaryOfVariableBindings(_tableViewTo50)]];
+                                                                      views:NSDictionaryOfVariableBindings(_tableViewTo4)]];
   
-  UIView *previousView = _tableViewTo50;
-  
-  //****************************************************************************
-  UIView  *seperator = [[UIView alloc]init];
-  [seperator setTranslatesAutoresizingMaskIntoConstraints:NO];
-  seperator.backgroundColor = UIColor.grayColor;
-  [self.view addSubview:seperator];
-  
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[seperator]-0-|"
-                                                                    options:NSLayoutFormatDirectionLeftToRight
-                                                                    metrics:nil
-                                                                      views:NSDictionaryOfVariableBindings(seperator)]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[seperator(1)]-0-[previousView]"
-                                                                    options:NSLayoutFormatDirectionLeftToRight
-                                                                    metrics:nil
-                                                                      views:NSDictionaryOfVariableBindings(seperator, previousView)]];
-  previousView = seperator;
-  
-  //****************************************************************************
-  
-  _tableViewTo100 = [[LKTHorizontalTableView alloc] init];
-  _tableViewTo100.translatesAutoresizingMaskIntoConstraints = NO;
-  _tableViewTo100.tag = 100;
-  _tableViewTo100.delegate = self;
-  [self.view addSubview:_tableViewTo100];
-  
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_tableViewTo100]-0-|"
-                                                                    options:NSLayoutFormatDirectionLeftToRight
-                                                                    metrics:nil
-                                                                      views:NSDictionaryOfVariableBindings(_tableViewTo100)]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_tableViewTo100(150)]-0-[previousView]"
-                                                                    options:NSLayoutFormatDirectionLeftToRight
-                                                                    metrics:nil
-                                                                      views:NSDictionaryOfVariableBindings(_tableViewTo100, previousView)]];
-  
-  [_tableViewTo50 loadViewWithData];
-  [_tableViewTo100 loadViewWithData];
+  [_tableViewTo4 loadViewWithData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -121,15 +84,9 @@
 #pragma mark -
 #pragma mark HorizontalTableViewDelegate methods
 
-- (void)tableView:(LKTHorizontalTableView *)tableView didSelectTileAtIndex:(NSUInteger)index {
-  NSLog(@"\n\n****************************************************\nView selected : %@\n****************************************************\n\n", [NSString stringWithFormat:@"%@", tableView.tag == _tableViewTo50.tag ? [_arrayFiguresTo50 objectAtIndex:index] : [_arrayFiguresTo100 objectAtIndex:index]]);
-}
-
 - (NSInteger)numberOfTilesForTableView:(LKTHorizontalTableView *)tableView {
-  if (tableView.tag == 50)
-    return _arrayFiguresTo50.count;
-  else
-    return _arrayFiguresTo100.count;
+  return _arrayFiguresTo4.count;
+
 }
 
 - (UIView *)tableView:(LKTHorizontalTableView *)tableView
@@ -154,9 +111,18 @@
   
   tile.labelTitle.text = [NSString stringWithFormat:@"%ld", index];
   
-  tile.labelTitle.text = tableView.tag == _tableViewTo50.tag ?
-  [NSString stringWithFormat:@"%@", [_arrayFiguresTo50 objectAtIndex:index]] :
-  [NSString stringWithFormat:@"%@", [_arrayFiguresTo100 objectAtIndex:index]];
+  tile.labelTitle.text = [NSString stringWithFormat:@"%@", [_arrayFiguresTo4 objectAtIndex:index]];
+  
+  NSLog(@"%llu", tile.labelTitle.text.longLongValue);
+  NSLog(@"%@", [_mutableArrayTilesSelected description]);
+  if (![_mutableArrayTilesSelected containsObject:tile.labelTitle.text])
+    [_mutableArrayBadgesViews addObject:[tile appendTagToSuperView:tile
+                                                          withText:tile.labelTitle.text
+                                         isTextLanguageRightToLeft:NO
+                                                               tag:tile.labelTitle.text.longLongValue
+                                                   insideContainer:NO
+                                                     withAlignment:DBZAlignmentRight]];
+  
   
   return tile;
 }
@@ -175,6 +141,20 @@
 
 - (void)horizontalScrollViewDidScroll:(UIScrollView *)scrollView {
   
+}
+
+- (void)tableView:(LKTHorizontalTableView *)tableView didSelectTileAtIndex:(NSUInteger)index {
+  NSLog(@"\n\n****************************************************\nView selected : %@\n****************************************************\n\n", [NSString stringWithFormat:@"%@", [_arrayFiguresTo4 objectAtIndex:index]]);
+  
+  UILabel * notificationBadge = [_mutableArrayBadgesViews objectAtIndex:index];
+  
+  if (![_mutableArrayTilesSelected containsObject:[NSString stringWithFormat:@"%ld", (long)notificationBadge.tag]])
+    [_mutableArrayTilesSelected addObject:[NSString stringWithFormat:@"%ld", (long)notificationBadge.tag]];
+  
+  NSSortDescriptor *ascendingSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES];
+  [_mutableArrayTilesSelected sortUsingDescriptors:[NSArray arrayWithObject:ascendingSortDescriptor]];
+  
+  [notificationBadge removeFromSuperview];
 }
 
 @end
