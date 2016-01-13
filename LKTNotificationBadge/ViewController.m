@@ -113,11 +113,15 @@
   NSLog(@"%llu", tile.labelTitle.text.longLongValue);
   
   [[LKTNotificationBadge sharedInstance] appendBadgeToSuperView:tile
-                                                       withText:tile.labelTitle.text
-                                      isTextLanguageRightToLeft:NO
-                                                            tag:[NSNumber numberWithUnsignedInteger:index]
-                                                insideContainer:NO
-                                                  withAlignment:LKTNotificationBadgeAlignmentRight];
+                                                        withText:tile.labelTitle.text
+                                                            font:nil
+                                                       textColor:UIColor.whiteColor
+                                       isTextLanguageRightToLeft:NO
+                                                 backgroundColor:UIColor.redColor
+                                                             tag:[NSNumber numberWithUnsignedInteger:index]
+                                                 insideContainer:NO
+                                                    atEdgeCorner:YES
+                                                       alignment:LKTNotificationBadgeAlignmentRight];
   
   
   return tile;

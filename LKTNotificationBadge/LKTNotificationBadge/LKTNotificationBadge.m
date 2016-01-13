@@ -36,9 +36,13 @@
 // YOU NEED TO PASS IN THE ARGUMENTS :
 // superView : THE SUPERVIEW WHERE THE BADGE WILL BE ADDED AS A SUBVIEW
 // text : COUNT NUMBER (SHOULD NOT EXCEED 99, OTHERWISE THE COUNT WILL BE FORMATTED AS 99+)
+// font : TEXT FONT
+// textColor : TEXT COLOR
 // isTextLanguageRightToLeft : IF THE APP LAYOUT ALIGNMENT IS FROM RIGHT TO LEFT (ARABIC FOR EXAMPLE)
+// backgroundColor : THE BADGE BACKGROUND COLOR
 // tag : A TAG IF NEEDED
 // insideContainer : IF YOU WANT THE BADGE INSIDE OR OUTSIDE THE SUPERVIEW
+// atEdgeCorner : THE BADGE WILL OVERLAY THE EDGE TOP CORNER
 // alignment : IF THE BADGE SHOULD BE ON THE LEFT/CENTER/RIGHT SIDE OF THE SUPERVIEW
 //
 // THE METHOD RETURNS THE BADGE LABEL TO KEEP THE REFERENCE OF IT AND DELETE THE BADGE LABEL
@@ -47,10 +51,14 @@
 
 - (void)appendBadgeToSuperView:(UIView *)superView
                       withText:(NSString *)text
+                          font:(UIFont *)font
+                     textColor:(UIColor *)textColor
      isTextLanguageRightToLeft:(BOOL)isTextLanguageRightToLeft
+               backgroundColor:(UIColor *)backgroundColor
                            tag:(NSNumber *)tag
                insideContainer:(BOOL)insideContainer
-                 withAlignment:(LKTNotificationBadgeAlignment)alignment {
+                  atEdgeCorner:(BOOL)atEdgeCorner
+                     alignment:(LKTNotificationBadgeAlignment)alignment {
   
   CGRect superViewframe = superView.frame;
   __unused CGFloat interMargin = 5.f;
@@ -71,46 +79,50 @@
   else
     badgeHeight = LKTNotificationBadgeTagHeight1Character;
   
+  CGFloat yPosition = atEdgeCorner ?
+  - (badgeWidth / 2) :
+  (superView.frame.size.height / 2 - (badgeWidth / 2));
+  
   UILabel *labelText;
   if (alignment == LKTNotificationBadgeAlignmentLeft && insideContainer)
     labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
                                                           superViewframe.size.width - badgeWidth :
                                                           0,
-                                                          5,
+                                                          yPosition,
                                                           badgeWidth,
                                                           badgeHeight)];
   else if (alignment == LKTNotificationBadgeAlignmentLeft && !insideContainer)
     labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
                                                           superViewframe.size.width - (badgeWidth / 2) :
                                                           -(badgeWidth / 2),
-                                                          5,
+                                                          yPosition,
                                                           badgeWidth,
                                                           badgeHeight)];
   else if (alignment == LKTNotificationBadgeAlignmentRight && insideContainer)
     labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
                                                           0 :
                                                           superViewframe.size.width - badgeWidth,
-                                                          5,
+                                                          yPosition,
                                                           badgeWidth,
                                                           badgeHeight)];
   else if (alignment == LKTNotificationBadgeAlignmentRight && !insideContainer)
     labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
                                                           -(badgeWidth / 2) :
                                                           superViewframe.size.width - (badgeWidth / 2),
-                                                          5,
+                                                          yPosition,
                                                           badgeWidth,
                                                           badgeHeight)];
   else
     labelText = [[UILabel alloc] initWithFrame:CGRectMake(superViewframe.size.width / 2 - badgeWidth / 2,
-                                                          5,
+                                                          yPosition,
                                                           badgeWidth,
                                                           badgeHeight)];
   
-  labelText.textColor = UIColor.whiteColor;
+  labelText.textColor = textColor ? textColor : UIColor.whiteColor;
   labelText.textAlignment = NSTextAlignmentCenter;
   labelText.text = text.length > 2 ? @"99+" : text;
-  labelText.backgroundColor = UIColor.redColor;
-  [labelText setFont:[UIFont boldSystemFontOfSize:14]];
+  labelText.backgroundColor = backgroundColor ? backgroundColor : UIColor.redColor;
+  [labelText setFont:font ? font : [UIFont boldSystemFontOfSize:14]];
   labelText.adjustsFontSizeToFitWidth = YES;
   labelText.clipsToBounds = YES;
   labelText.layer.cornerRadius = labelText.frame.size.width / 2;

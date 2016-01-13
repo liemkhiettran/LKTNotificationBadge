@@ -35,9 +35,13 @@ typedef NS_ENUM(NSInteger, LKTNotificationBadgeAlignment) {
 // YOU NEED TO PASS IN THE ARGUMENTS :
 // superView : THE SUPERVIEW WHERE THE BADGE WILL BE ADDED AS A SUBVIEW
 // text : COUNT NUMBER (SHOULD NOT EXCEED 99, OTHERWISE THE COUNT WILL BE FORMATTED AS 99+)
+// font : TEXT FONT
+// textColor : TEXT COLOR
 // isTextLanguageRightToLeft : IF THE APP LAYOUT ALIGNMENT IS FROM RIGHT TO LEFT (ARABIC FOR EXAMPLE)
+// backgroundColor : THE BADGE BACKGROUND COLOR
 // tag : A TAG IF NEEDED
 // insideContainer : IF YOU WANT THE BADGE INSIDE OR OUTSIDE THE SUPERVIEW
+// atEdgeCorner : THE BADGE WILL OVERLAY THE EDGE TOP CORNER
 // alignment : IF THE BADGE SHOULD BE ON THE LEFT/CENTER/RIGHT SIDE OF THE SUPERVIEW
 //
 // THE METHOD RETURNS THE BADGE LABEL TO KEEP THE REFERENCE OF IT AND DELETE THE BADGE LABEL
@@ -45,11 +49,15 @@ typedef NS_ENUM(NSInteger, LKTNotificationBadgeAlignment) {
 //***************************************************************************************************
 
 - (void)appendBadgeToSuperView:(UIView *)superView
-                           withText:(NSString *)text
-          isTextLanguageRightToLeft:(BOOL)isTextLanguageRightToLeft
-                                tag:(NSNumber *)tag
-                    insideContainer:(BOOL)insideContainer
-                      withAlignment:(LKTNotificationBadgeAlignment)alignment;
+                      withText:(NSString *)text
+                          font:(UIFont *)font
+                     textColor:(UIColor *)textColor
+     isTextLanguageRightToLeft:(BOOL)isTextLanguageRightToLeft
+               backgroundColor:(UIColor *)backgroundColor
+                           tag:(NSNumber *)tag
+               insideContainer:(BOOL)insideContainer
+                  atEdgeCorner:(BOOL)atEdgeCorner
+                 alignment:(LKTNotificationBadgeAlignment)alignment;
 
 //********************************************************************************
 // REMOVE THE BADGE LABEL VIA THE TAG ONCE THE USER INTERACTED WITH THE UI ELEMENT
