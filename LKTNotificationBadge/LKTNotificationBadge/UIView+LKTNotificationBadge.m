@@ -34,47 +34,55 @@
   CGRect superViewframe = superView.frame;
   CGFloat interMargin = 5.f;
   
+  CGFloat badgeWidth = 0.f;
+  if (text.length >= 3)
+    badgeWidth = LKTNotificationBadgeTagWidth3Characters;
+  else if (text.length == 2)
+    badgeWidth = LKTNotificationBadgeTagWidth2Characters;
+  else
+    badgeWidth = LKTNotificationBadgeTagWidth1Character;
+  
   UILabel *labelText;
   if (alignment == LKTNotificationBadgeAlignmentLeft && insideContainer)
     labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
-                                                          superViewframe.size.width - LKTNotificationBadgeTagWidth :
+                                                          superViewframe.size.width - badgeWidth :
                                                           0,
                                                           5,
-                                                          LKTNotificationBadgeTagWidth,
+                                                          badgeWidth,
                                                           LKTNotificationBadgeTagHeight)];
   else if (alignment == LKTNotificationBadgeAlignmentLeft && !insideContainer)
     labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
                                                           superViewframe.size.width :
-                                                          -LKTNotificationBadgeTagWidth - interMargin,
+                                                          -badgeWidth - interMargin,
                                                           5,
-                                                          LKTNotificationBadgeTagWidth,
+                                                          badgeWidth,
                                                           LKTNotificationBadgeTagHeight)];
   else if (alignment == LKTNotificationBadgeAlignmentRight && insideContainer)
     labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
                                                           0 :
-                                                          superViewframe.size.width - LKTNotificationBadgeTagWidth,
+                                                          superViewframe.size.width - badgeWidth,
                                                           5,
-                                                          LKTNotificationBadgeTagWidth,
+                                                          badgeWidth,
                                                           LKTNotificationBadgeTagHeight)];
   else if (alignment == LKTNotificationBadgeAlignmentRight && !insideContainer)
     labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
-                                                           -LKTNotificationBadgeTagWidth - interMargin :
+                                                           -badgeWidth - interMargin :
                                                           superViewframe.size.width + interMargin,
                                                           5,
-                                                          LKTNotificationBadgeTagWidth,
+                                                          badgeWidth,
                                                           LKTNotificationBadgeTagHeight)];
   else
-    labelText = [[UILabel alloc] initWithFrame:CGRectMake(superViewframe.size.width / 2 - LKTNotificationBadgeTagWidth / 2,
+    labelText = [[UILabel alloc] initWithFrame:CGRectMake(superViewframe.size.width / 2 - badgeWidth / 2,
                                                           5,
-                                                          LKTNotificationBadgeTagWidth,
+                                                          badgeWidth,
                                                           LKTNotificationBadgeTagHeight)];
   
   labelText.textColor = UIColor.whiteColor;
   labelText.textAlignment = NSTextAlignmentCenter;
-  labelText.text = text.length > 3 ? @"99+" : text;
+  labelText.text = text.length > 2 ? @"99+" : text;
   labelText.backgroundColor = UIColor.redColor;
   labelText.clipsToBounds = YES;
-  labelText.layer.cornerRadius = 6.f;
+  labelText.layer.cornerRadius = 8.f;
   labelText.tag = tag;
 
   [superView addSubview:labelText];

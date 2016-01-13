@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-#define LKTNotificationBadgeTagWidth 40.f
-#define LKTNotificationBadgeTagHeight 17.f
+#define LKTNotificationBadgeTagWidth3Characters 40.f
+#define LKTNotificationBadgeTagWidth2Characters 35.f
+#define LKTNotificationBadgeTagWidth1Character 30.f
+#define LKTNotificationBadgeTagHeight 18.f
 
 /* Values for DBZAlignment */
 typedef NS_ENUM(NSInteger, LKTNotificationBadgeAlignment) {
