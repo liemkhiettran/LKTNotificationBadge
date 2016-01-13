@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C041C8721C4635EC0073522F /* LKTNotificationBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = C041C8711C4635EC0073522F /* LKTNotificationBadge.m */; };
 		C0BCB3BC1C43D36100E56E7B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BCB3BB1C43D36100E56E7B /* main.m */; };
 		C0BCB3BF1C43D36100E56E7B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BCB3BE1C43D36100E56E7B /* AppDelegate.m */; };
 		C0BCB3C21C43D36100E56E7B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BCB3C11C43D36100E56E7B /* ViewController.m */; };
@@ -15,10 +16,11 @@
 		C0BCB3CA1C43D36100E56E7B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0BCB3C81C43D36100E56E7B /* LaunchScreen.storyboard */; };
 		C0BCB3D61C43DA7400E56E7B /* LKTHorizontalTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BCB3D51C43DA7400E56E7B /* LKTHorizontalTableView.m */; };
 		C0BCB3D91C43DAA800E56E7B /* LKTTileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BCB3D81C43DAA800E56E7B /* LKTTileCell.m */; };
-		C0BCB3DC1C43DD9E00E56E7B /* UIView+LKTNotificationBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = C0BCB3DB1C43DD9E00E56E7B /* UIView+LKTNotificationBadge.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C041C8701C4635EC0073522F /* LKTNotificationBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTNotificationBadge.h; sourceTree = "<group>"; };
+		C041C8711C4635EC0073522F /* LKTNotificationBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTNotificationBadge.m; sourceTree = "<group>"; };
 		C0BCB3B71C43D36100E56E7B /* LKTNotificationBadge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LKTNotificationBadge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0BCB3BB1C43D36100E56E7B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C0BCB3BD1C43D36100E56E7B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -33,8 +35,6 @@
 		C0BCB3D51C43DA7400E56E7B /* LKTHorizontalTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTHorizontalTableView.m; sourceTree = "<group>"; };
 		C0BCB3D71C43DAA800E56E7B /* LKTTileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKTTileCell.h; sourceTree = "<group>"; };
 		C0BCB3D81C43DAA800E56E7B /* LKTTileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKTTileCell.m; sourceTree = "<group>"; };
-		C0BCB3DA1C43DD9E00E56E7B /* UIView+LKTNotificationBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LKTNotificationBadge.h"; sourceTree = "<group>"; };
-		C0BCB3DB1C43DD9E00E56E7B /* UIView+LKTNotificationBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LKTNotificationBadge.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,8 +103,8 @@
 		C0BCB3D21C43DA2100E56E7B /* LKTNotificationBadge */ = {
 			isa = PBXGroup;
 			children = (
-				C0BCB3DA1C43DD9E00E56E7B /* UIView+LKTNotificationBadge.h */,
-				C0BCB3DB1C43DD9E00E56E7B /* UIView+LKTNotificationBadge.m */,
+				C041C8701C4635EC0073522F /* LKTNotificationBadge.h */,
+				C041C8711C4635EC0073522F /* LKTNotificationBadge.m */,
 			);
 			path = LKTNotificationBadge;
 			sourceTree = "<group>";
@@ -188,12 +188,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C041C8721C4635EC0073522F /* LKTNotificationBadge.m in Sources */,
 				C0BCB3C21C43D36100E56E7B /* ViewController.m in Sources */,
 				C0BCB3D91C43DAA800E56E7B /* LKTTileCell.m in Sources */,
 				C0BCB3BF1C43D36100E56E7B /* AppDelegate.m in Sources */,
 				C0BCB3BC1C43D36100E56E7B /* main.m in Sources */,
 				C0BCB3D61C43DA7400E56E7B /* LKTHorizontalTableView.m in Sources */,
-				C0BCB3DC1C43DD9E00E56E7B /* UIView+LKTNotificationBadge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +342,7 @@
 				C0BCB3D01C43D36100E56E7B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
