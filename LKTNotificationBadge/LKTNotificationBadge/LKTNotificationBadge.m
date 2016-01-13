@@ -60,78 +60,81 @@
                   atEdgeCorner:(BOOL)atEdgeCorner
                      alignment:(LKTNotificationBadgeAlignment)alignment {
   
-  if (![[[LKTNotificationBadge sharedInstance] mutableArrayBadges] containsObject:[NSString stringWithFormat:@"%ld", (long)tag]]) {
-    CGRect superViewframe = superView.frame;
-    __unused CGFloat interMargin = 5.f;
-    
-    CGFloat badgeWidth = 0.f;
-    if (text.length >= 3)
-      badgeWidth = LKTNotificationBadgeTagWidth3Characters;
-    else if (text.length == 2)
-      badgeWidth = LKTNotificationBadgeTagWidth2Characters;
-    else
-      badgeWidth = LKTNotificationBadgeTagWidth1Character;
-    
-    CGFloat badgeHeight = 0.f;
-    if (text.length >= 3)
-      badgeHeight = LKTNotificationBadgeTagHeight3Characters;
-    else if (text.length == 2)
-      badgeHeight = LKTNotificationBadgeTagHeight2Characters;
-    else
-      badgeHeight = LKTNotificationBadgeTagHeight1Character;
-    
-    CGFloat yPosition = atEdgeCorner ?
-    - (badgeWidth / 2) :
-    (superView.frame.size.height / 2 - (badgeWidth / 2));
-    
-    UILabel *labelText;
-    if (alignment == LKTNotificationBadgeAlignmentLeft && insideContainer)
-      labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
-                                                            superViewframe.size.width - badgeWidth :
-                                                            0,
-                                                            yPosition,
-                                                            badgeWidth,
-                                                            badgeHeight)];
-    else if (alignment == LKTNotificationBadgeAlignmentLeft && !insideContainer)
-      labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
-                                                            superViewframe.size.width - (badgeWidth / 2) :
-                                                            -(badgeWidth / 2),
-                                                            yPosition,
-                                                            badgeWidth,
-                                                            badgeHeight)];
-    else if (alignment == LKTNotificationBadgeAlignmentRight && insideContainer)
-      labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
-                                                            0 :
-                                                            superViewframe.size.width - badgeWidth,
-                                                            yPosition,
-                                                            badgeWidth,
-                                                            badgeHeight)];
-    else if (alignment == LKTNotificationBadgeAlignmentRight && !insideContainer)
-      labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
-                                                            -(badgeWidth / 2) :
-                                                            superViewframe.size.width - (badgeWidth / 2),
-                                                            yPosition,
-                                                            badgeWidth,
-                                                            badgeHeight)];
-    else
-      labelText = [[UILabel alloc] initWithFrame:CGRectMake(superViewframe.size.width / 2 - badgeWidth / 2,
-                                                            yPosition,
-                                                            badgeWidth,
-                                                            badgeHeight)];
-    
-    labelText.textColor = textColor ? textColor : UIColor.whiteColor;
-    labelText.textAlignment = NSTextAlignmentCenter;
-    labelText.text = text.length > 2 ? @"99+" : text;
-    labelText.backgroundColor = backgroundColor ? backgroundColor : UIColor.redColor;
-    [labelText setFont:font ? font : [UIFont boldSystemFontOfSize:14]];
-    labelText.adjustsFontSizeToFitWidth = YES;
-    labelText.clipsToBounds = YES;
-    labelText.layer.cornerRadius = labelText.frame.size.width / 2;
-    labelText.tag = tag.unsignedIntegerValue;
-    
-    [superView addSubview:labelText];
-    [[[LKTNotificationBadge sharedInstance] mutableArrayBadges] addObject:labelText];
+  for (UILabel *label in [[LKTNotificationBadge sharedInstance] mutableArrayBadges]) {
+    if (label.tag == tag.unsignedIntegerValue)
+      return ;
   }
+  
+  CGRect superViewframe = superView.frame;
+  __unused CGFloat interMargin = 5.f;
+  
+  CGFloat badgeWidth = 0.f;
+  if (text.length >= 3)
+    badgeWidth = LKTNotificationBadgeTagWidth3Characters;
+  else if (text.length == 2)
+    badgeWidth = LKTNotificationBadgeTagWidth2Characters;
+  else
+    badgeWidth = LKTNotificationBadgeTagWidth1Character;
+  
+  CGFloat badgeHeight = 0.f;
+  if (text.length >= 3)
+    badgeHeight = LKTNotificationBadgeTagHeight3Characters;
+  else if (text.length == 2)
+    badgeHeight = LKTNotificationBadgeTagHeight2Characters;
+  else
+    badgeHeight = LKTNotificationBadgeTagHeight1Character;
+  
+  CGFloat yPosition = atEdgeCorner ?
+  - (badgeWidth / 2) :
+  (superView.frame.size.height / 2 - (badgeWidth / 2));
+  
+  UILabel *labelText;
+  if (alignment == LKTNotificationBadgeAlignmentLeft && insideContainer)
+    labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
+                                                          superViewframe.size.width - badgeWidth :
+                                                          0,
+                                                          yPosition,
+                                                          badgeWidth,
+                                                          badgeHeight)];
+  else if (alignment == LKTNotificationBadgeAlignmentLeft && !insideContainer)
+    labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
+                                                          superViewframe.size.width - (badgeWidth / 2) :
+                                                          -(badgeWidth / 2),
+                                                          yPosition,
+                                                          badgeWidth,
+                                                          badgeHeight)];
+  else if (alignment == LKTNotificationBadgeAlignmentRight && insideContainer)
+    labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
+                                                          0 :
+                                                          superViewframe.size.width - badgeWidth,
+                                                          yPosition,
+                                                          badgeWidth,
+                                                          badgeHeight)];
+  else if (alignment == LKTNotificationBadgeAlignmentRight && !insideContainer)
+    labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
+                                                          -(badgeWidth / 2) :
+                                                          superViewframe.size.width - (badgeWidth / 2),
+                                                          yPosition,
+                                                          badgeWidth,
+                                                          badgeHeight)];
+  else
+    labelText = [[UILabel alloc] initWithFrame:CGRectMake(superViewframe.size.width / 2 - badgeWidth / 2,
+                                                          yPosition,
+                                                          badgeWidth,
+                                                          badgeHeight)];
+  
+  labelText.textColor = textColor ? textColor : UIColor.whiteColor;
+  labelText.textAlignment = NSTextAlignmentCenter;
+  labelText.text = text.length > 2 ? @"99+" : text;
+  labelText.backgroundColor = backgroundColor ? backgroundColor : UIColor.redColor;
+  [labelText setFont:font ? font : [UIFont boldSystemFontOfSize:14]];
+  labelText.adjustsFontSizeToFitWidth = YES;
+  labelText.clipsToBounds = YES;
+  labelText.layer.cornerRadius = labelText.frame.size.width / 2;
+  labelText.tag = tag.unsignedIntegerValue;
+  
+  [superView addSubview:labelText];
+  [[[LKTNotificationBadge sharedInstance] mutableArrayBadges] addObject:labelText];
 }
 
 //********************************************************************************
@@ -142,6 +145,7 @@
   for (UILabel *label in [[LKTNotificationBadge sharedInstance] mutableArrayBadges]) {
     if (label.tag == tag.unsignedIntegerValue) {
       [label removeFromSuperview];
+      [[[LKTNotificationBadge sharedInstance] mutableArrayBadges] removeObject:label];
       break ;
     }
   }
