@@ -27,15 +27,13 @@
 
 #import "ViewController.h"
 #import "LKTTileCell.h"
-#import "UIView+LKTNotificationBadge.h"
+#import "LKTNotificationBadge.h"
 
 @interface ViewController ()
 
 @property (strong, nonatomic) LKTHorizontalTableView *tableViewTo4;
 
 @property (strong, nonatomic) NSMutableArray *arrayFiguresTo4;
-@property (strong, nonatomic) NSMutableArray *mutableArrayTilesSelected;
-@property (strong, nonatomic) NSMutableArray *mutableArrayBadgesViews;
 
 @property (strong, nonatomic) LKTTileCell *tileCell;
 
@@ -47,15 +45,14 @@
   [super viewDidLoad];
   // Do any additional setup after loading the view, typically from a nib.
   
-  _mutableArrayTilesSelected = [NSMutableArray array];
-  _mutableArrayBadgesViews = [NSMutableArray array];
   _arrayFiguresTo4 = [NSMutableArray array];
   
-  NSUInteger step = 2;
+  [LKTNotificationBadge sharedInstance];
+  
   NSUInteger i = 0;
-  while (i < 10) {
+  while (i < 4) {
     [_arrayFiguresTo4 addObject:[NSString stringWithFormat:@"%ld", i]];
-    i += step;
+    i += 1;
   }
   
   _tableViewTo4 = [[LKTHorizontalTableView alloc] init];
@@ -114,14 +111,13 @@
   tile.labelTitle.text = [NSString stringWithFormat:@"%@", [_arrayFiguresTo4 objectAtIndex:index]];
   
   NSLog(@"%llu", tile.labelTitle.text.longLongValue);
-  NSLog(@"%@", [_mutableArrayTilesSelected description]);
-  if (![_mutableArrayTilesSelected containsObject:tile.labelTitle.text])
-    [_mutableArrayBadgesViews addObject:[tile appendTagToSuperView:tile
-                                                          withText:tile.labelTitle.text
-                                         isTextLanguageRightToLeft:NO
-                                                               tag:tile.labelTitle.text.longLongValue
-                                                   insideContainer:NO
-                                                     withAlignment:LKTNotificationBadgeAlignmentRight]];
+  
+  [[LKTNotificationBadge sharedInstance] appendBadgeToSuperView:tile
+                                                       withText:tile.labelTitle.text
+                                      isTextLanguageRightToLeft:NO
+                                                            tag:[NSNumber numberWithUnsignedInteger:index]
+                                                insideContainer:NO
+                                                  withAlignment:LKTNotificationBadgeAlignmentRight];
   
   
   return tile;
@@ -146,15 +142,7 @@
 - (void)tableView:(LKTHorizontalTableView *)tableView didSelectTileAtIndex:(NSUInteger)index {
   NSLog(@"\n\n****************************************************\nView selected : %@\n****************************************************\n\n", [NSString stringWithFormat:@"%@", [_arrayFiguresTo4 objectAtIndex:index]]);
   
-  UILabel * notificationBadge = [_mutableArrayBadgesViews objectAtIndex:index];
-  
-  if (![_mutableArrayTilesSelected containsObject:[NSString stringWithFormat:@"%ld", (long)notificationBadge.tag]])
-    [_mutableArrayTilesSelected addObject:[NSString stringWithFormat:@"%ld", (long)notificationBadge.tag]];
-  
-  NSSortDescriptor *ascendingSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES];
-  [_mutableArrayTilesSelected sortUsingDescriptors:[NSArray arrayWithObject:ascendingSortDescriptor]];
-  
-  [notificationBadge removeFromSuperview];
+  [[LKTNotificationBadge sharedInstance] removeBadgeForTag:[NSNumber numberWithUnsignedInteger:index]];
 }
 
 @end
