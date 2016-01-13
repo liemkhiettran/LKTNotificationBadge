@@ -1,26 +1,33 @@
 //
-//  UIView+LKTNotificationBadge.h
+//  LKTNotificationBadge.h
 //  LKTNotificationBadge
 //
-//  Created by liem-khiet tran on 1/11/16.
+//  Created by liem-khiet tran on 1/13/16.
 //  Copyright © 2016 liem-khiet tran. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#define LKTNotificationBadgeTagWidth3Characters 40.f
-#define LKTNotificationBadgeTagWidth2Characters 35.f
-#define LKTNotificationBadgeTagWidth1Character 30.f
-#define LKTNotificationBadgeTagHeight 18.f
+#define LKTNotificationBadgeTagWidth3Characters 30.f
+#define LKTNotificationBadgeTagWidth2Characters 28.f
+#define LKTNotificationBadgeTagWidth1Character 28.f
+#define LKTNotificationBadgeTagHeight3Characters 30.f
+#define LKTNotificationBadgeTagHeight2Characters 28.f
+#define LKTNotificationBadgeTagHeight1Character 28.f
 
-/* Values for DBZAlignment */
+/* Values for LKTNotificationBadgeAlignment */
 typedef NS_ENUM(NSInteger, LKTNotificationBadgeAlignment) {
   LKTNotificationBadgeAlignmentLeft      = 0,    // Visually left aligned
   LKTNotificationBadgeAlignmentCenter    = 1,    // Visually centered
   LKTNotificationBadgeAlignmentRight     = 2,    // Visually right aligned
 };
 
-@interface UIView (LKTNotificationBadge)
+@interface LKTNotificationBadge : NSObject
+
+@property (strong, nonatomic) NSMutableArray *mutableArrayBadges;
+
++ (id)sharedInstance;
 
 //***************************************************************************************************
 // ADD AN IN-APP NOTIFICATION BADGE LABEL TO THE SUPER VIEW PASSED IN PARAMETER
@@ -37,10 +44,16 @@ typedef NS_ENUM(NSInteger, LKTNotificationBadgeAlignment) {
 // FROM THE SUPERVIEW
 //***************************************************************************************************
 
-- (UILabel *)appendTagToSuperView:(UIView *)superView
-                  withText:(NSString *)text
-        isTextLanguageRightToLeft:(BOOL)isTextLanguageRightToLeft
-                       tag:(NSUInteger)tag
-             insideContainer:(BOOL)insideContainer
-               withAlignment:(LKTNotificationBadgeAlignment)alignment;
+- (void)appendBadgeToSuperView:(UIView *)superView
+                           withText:(NSString *)text
+          isTextLanguageRightToLeft:(BOOL)isTextLanguageRightToLeft
+                                tag:(NSNumber *)tag
+                    insideContainer:(BOOL)insideContainer
+                      withAlignment:(LKTNotificationBadgeAlignment)alignment;
+
+//********************************************************************************
+// REMOVE THE BADGE LABEL VIA THE TAG ONCE THE USER INTERACTED WITH THE UI ELEMENT
+//********************************************************************************
+- (void)removeBadgeForTag:(NSNumber *)tag;
+
 @end
