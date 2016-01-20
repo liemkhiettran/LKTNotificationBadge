@@ -12,24 +12,6 @@
 
 @implementation LKTNotificationBadge
 
-+ (id)sharedInstance {
-  
-  static LKTNotificationBadge *sharedInstance = nil;
-  
-  if (sharedInstance != nil) {
-    return sharedInstance;
-  }
-  
-  static dispatch_once_t once;
-  
-  dispatch_once(&once, ^{
-    sharedInstance = [[LKTNotificationBadge alloc] init];
-    sharedInstance.mutableArrayBadges = [NSMutableArray array];
-  });
-  
-  return sharedInstance;
-}
-
 //***************************************************************************************************
 // ADD AN IN-APP NOTIFICATION BADGE LABEL TO THE SUPER VIEW PASSED IN PARAMETER
 //
@@ -45,110 +27,90 @@
 // atEdgeCorner : THE BADGE WILL OVERLAY THE EDGE TOP CORNER
 // alignment : IF THE BADGE SHOULD BE ON THE LEFT/CENTER/RIGHT SIDE OF THE SUPERVIEW
 //
-// THE METHOD RETURNS THE BADGE LABEL TO KEEP THE REFERENCE OF IT AND DELETE THE BADGE LABEL
-// FROM THE SUPERVIEW
+// THE METHOD RETURNS THE BADGE LABEL WITH ITS FRAME SET
 //***************************************************************************************************
 
-- (void)appendBadgeToSuperView:(UIView *)superView
-                      withText:(NSString *)text
-                          font:(UIFont *)font
-                     textColor:(UIColor *)textColor
-     isTextLanguageRightToLeft:(BOOL)isTextLanguageRightToLeft
-               backgroundColor:(UIColor *)backgroundColor
-                           tag:(NSNumber *)tag
-               insideContainer:(BOOL)insideContainer
-                  atEdgeCorner:(BOOL)atEdgeCorner
-                     alignment:(LKTNotificationBadgeAlignment)alignment {
+- (instancetype)initBadgeToSuperView:(UIView *)superView
+                            withText:(NSString *)text
+                                font:(UIFont *)font
+                           textColor:(UIColor *)textColor
+           isTextLanguageRightToLeft:(BOOL)isTextLanguageRightToLeft
+                     backgroundColor:(UIColor *)backgroundColor
+                                 tag:(NSNumber *)tag
+                     insideContainer:(BOOL)insideContainer
+                        atEdgeCorner:(BOOL)atEdgeCorner
+                           alignment:(LKTNotificationBadgeAlignment)alignment {
   
-  for (UILabel *label in [[LKTNotificationBadge sharedInstance] mutableArrayBadges]) {
-    if (label.tag == tag.unsignedIntegerValue)
-      return ;
-  }
-  
-  CGRect superViewframe = superView.frame;
-  __unused CGFloat interMargin = 5.f;
-  
-  CGFloat badgeWidth = 0.f;
-  if (text.length >= 3)
-    badgeWidth = LKTNotificationBadgeTagWidth3Characters;
-  else if (text.length == 2)
-    badgeWidth = LKTNotificationBadgeTagWidth2Characters;
-  else
-    badgeWidth = LKTNotificationBadgeTagWidth1Character;
-  
-  CGFloat badgeHeight = 0.f;
-  if (text.length >= 3)
-    badgeHeight = LKTNotificationBadgeTagHeight3Characters;
-  else if (text.length == 2)
-    badgeHeight = LKTNotificationBadgeTagHeight2Characters;
-  else
-    badgeHeight = LKTNotificationBadgeTagHeight1Character;
-  
-  CGFloat yPosition = atEdgeCorner ?
-  - (badgeWidth / 2) :
-  (superView.frame.size.height / 2 - (badgeWidth / 2));
-  
-  UILabel *labelText;
+    CGRect superViewframe = superView.frame;
+    __unused CGFloat interMargin = 5.f;
+    
+    CGFloat badgeWidth = 0.f;
+    if (text.length >= 3)
+      badgeWidth = LKTNotificationBadgeTagWidth3Characters;
+    else if (text.length == 2)
+      badgeWidth = LKTNotificationBadgeTagWidth2Characters;
+    else
+      badgeWidth = LKTNotificationBadgeTagWidth1Character;
+    
+    CGFloat badgeHeight = 0.f;
+    if (text.length >= 3)
+      badgeHeight = LKTNotificationBadgeTagHeight3Characters;
+    else if (text.length == 2)
+      badgeHeight = LKTNotificationBadgeTagHeight2Characters;
+    else
+      badgeHeight = LKTNotificationBadgeTagHeight1Character;
+    
+    CGFloat yPosition = atEdgeCorner ?
+    - (badgeWidth / 2) :
+    (superView.frame.size.height / 2 - (badgeWidth / 2));
+    
   if (alignment == LKTNotificationBadgeAlignmentLeft && insideContainer)
-    labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
-                                                          superViewframe.size.width - badgeWidth :
-                                                          0,
-                                                          yPosition,
-                                                          badgeWidth,
-                                                          badgeHeight)];
+    self = [super initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
+                                           superViewframe.size.width - badgeWidth :
+                                           0,
+                                           yPosition,
+                                           badgeWidth,
+                                           badgeHeight)];
   else if (alignment == LKTNotificationBadgeAlignmentLeft && !insideContainer)
-    labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
-                                                          superViewframe.size.width - (badgeWidth / 2) :
-                                                          -(badgeWidth / 2),
-                                                          yPosition,
-                                                          badgeWidth,
-                                                          badgeHeight)];
+    self = [super initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
+                                           superViewframe.size.width - (badgeWidth / 2) :
+                                           -(badgeWidth / 2),
+                                           yPosition,
+                                           badgeWidth,
+                                           badgeHeight)];
   else if (alignment == LKTNotificationBadgeAlignmentRight && insideContainer)
-    labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
-                                                          0 :
-                                                          superViewframe.size.width - badgeWidth,
-                                                          yPosition,
-                                                          badgeWidth,
-                                                          badgeHeight)];
+    self = [super initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
+                                           0 :
+                                           superViewframe.size.width - badgeWidth,
+                                           yPosition,
+                                           badgeWidth,
+                                           badgeHeight)];
   else if (alignment == LKTNotificationBadgeAlignmentRight && !insideContainer)
-    labelText = [[UILabel alloc] initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
-                                                          -(badgeWidth / 2) :
-                                                          superViewframe.size.width - (badgeWidth / 2),
-                                                          yPosition,
-                                                          badgeWidth,
-                                                          badgeHeight)];
+    self = [super initWithFrame:CGRectMake(isTextLanguageRightToLeft ?
+                                           -(badgeWidth / 2) :
+                                           superViewframe.size.width - (badgeWidth / 2),
+                                           yPosition,
+                                           badgeWidth,
+                                           badgeHeight)];
   else
-    labelText = [[UILabel alloc] initWithFrame:CGRectMake(superViewframe.size.width / 2 - badgeWidth / 2,
-                                                          yPosition,
-                                                          badgeWidth,
-                                                          badgeHeight)];
+    self = [super initWithFrame:CGRectMake(superViewframe.size.width / 2 - badgeWidth / 2,
+                                           yPosition,
+                                           badgeWidth,
+                                           badgeHeight)];
   
-  labelText.textColor = textColor ? textColor : UIColor.whiteColor;
-  labelText.textAlignment = NSTextAlignmentCenter;
-  labelText.text = text.length > 2 ? @"99+" : text;
-  labelText.backgroundColor = backgroundColor ? backgroundColor : UIColor.redColor;
-  [labelText setFont:font ? font : [UIFont boldSystemFontOfSize:14]];
-  labelText.adjustsFontSizeToFitWidth = YES;
-  labelText.clipsToBounds = YES;
-  labelText.layer.cornerRadius = labelText.frame.size.width / 2;
-  labelText.tag = tag.unsignedIntegerValue;
-  
-  [superView addSubview:labelText];
-  [[[LKTNotificationBadge sharedInstance] mutableArrayBadges] addObject:labelText];
-}
-
-//********************************************************************************
-// REMOVE THE BADGE LABEL VIA THE TAG ONCE THE USER INTERACTED WITH THE UI ELEMENT
-//********************************************************************************
-- (void)removeBadgeForTag:(NSNumber *)tag {
-  
-  for (UILabel *label in [[LKTNotificationBadge sharedInstance] mutableArrayBadges]) {
-    if (label.tag == tag.unsignedIntegerValue) {
-      [label removeFromSuperview];
-      [[[LKTNotificationBadge sharedInstance] mutableArrayBadges] removeObject:label];
-      break ;
-    }
+  if (self) {
+    self.textColor = textColor ? textColor : UIColor.whiteColor;
+    self.textAlignment = NSTextAlignmentCenter;
+    self.text = text.length > 2 ? @"99+" : text;
+    self.backgroundColor = backgroundColor ? backgroundColor : UIColor.redColor;
+    [self setFont:font ? font : [UIFont boldSystemFontOfSize:14]];
+    self.adjustsFontSizeToFitWidth = YES;
+    self.clipsToBounds = YES;
+    self.layer.cornerRadius = self.frame.size.width / 2;
+    self.tag = tag.unsignedIntegerValue;
   }
+  
+  return self;
 }
 
 @end

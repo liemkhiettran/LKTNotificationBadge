@@ -23,11 +23,9 @@ typedef NS_ENUM(NSInteger, LKTNotificationBadgeAlignment) {
   LKTNotificationBadgeAlignmentRight     = 2,    // Visually right aligned
 };
 
-@interface LKTNotificationBadge : NSObject
+@interface LKTNotificationBadge : UILabel
 
 @property (strong, nonatomic) NSMutableArray *mutableArrayBadges;
-
-+ (id)sharedInstance;
 
 //***************************************************************************************************
 // ADD AN IN-APP NOTIFICATION BADGE LABEL TO THE SUPER VIEW PASSED IN PARAMETER
@@ -44,24 +42,18 @@ typedef NS_ENUM(NSInteger, LKTNotificationBadgeAlignment) {
 // atEdgeCorner : THE BADGE WILL OVERLAY THE EDGE TOP CORNER
 // alignment : IF THE BADGE SHOULD BE ON THE LEFT/CENTER/RIGHT SIDE OF THE SUPERVIEW
 //
-// THE METHOD RETURNS THE BADGE LABEL TO KEEP THE REFERENCE OF IT AND DELETE THE BADGE LABEL
-// FROM THE SUPERVIEW
+// THE METHOD CREATE A BADGE LABEL
 //***************************************************************************************************
 
-- (void)appendBadgeToSuperView:(UIView *)superView
-                      withText:(NSString *)text
-                          font:(UIFont *)font
-                     textColor:(UIColor *)textColor
-     isTextLanguageRightToLeft:(BOOL)isTextLanguageRightToLeft
-               backgroundColor:(UIColor *)backgroundColor
-                           tag:(NSNumber *)tag
-               insideContainer:(BOOL)insideContainer
-                  atEdgeCorner:(BOOL)atEdgeCorner
-                 alignment:(LKTNotificationBadgeAlignment)alignment;
-
-//********************************************************************************
-// REMOVE THE BADGE LABEL VIA THE TAG ONCE THE USER INTERACTED WITH THE UI ELEMENT
-//********************************************************************************
-- (void)removeBadgeForTag:(NSNumber *)tag;
+- (instancetype)initBadgeToSuperView:(UIView *)superView
+                            withText:(NSString *)text
+                                font:(UIFont *)font
+                           textColor:(UIColor *)textColor
+           isTextLanguageRightToLeft:(BOOL)isTextLanguageRightToLeft
+                     backgroundColor:(UIColor *)backgroundColor
+                                 tag:(NSNumber *)tag
+                     insideContainer:(BOOL)insideContainer
+                        atEdgeCorner:(BOOL)atEdgeCorner
+                           alignment:(LKTNotificationBadgeAlignment)alignment;
 
 @end

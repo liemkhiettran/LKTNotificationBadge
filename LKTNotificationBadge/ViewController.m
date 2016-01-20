@@ -32,10 +32,8 @@
 @interface ViewController ()
 
 @property (strong, nonatomic) LKTHorizontalTableView *tableViewTo4;
-
-@property (strong, nonatomic) NSMutableArray *arrayFiguresTo4;
-
 @property (strong, nonatomic) LKTTileCell *tileCell;
+@property (strong, nonatomic) NSMutableArray *arrayFiguresTo4;
 
 @end
 
@@ -46,8 +44,6 @@
   // Do any additional setup after loading the view, typically from a nib.
   
   _arrayFiguresTo4 = [NSMutableArray array];
-  
-  [LKTNotificationBadge sharedInstance];
   
   NSUInteger i = 0;
   while (i < 4) {
@@ -112,17 +108,18 @@
   
   NSLog(@"%llu", tile.labelTitle.text.longLongValue);
   
-  [[LKTNotificationBadge sharedInstance] appendBadgeToSuperView:tile
-                                                        withText:tile.labelTitle.text
-                                                            font:nil
-                                                       textColor:UIColor.whiteColor
-                                       isTextLanguageRightToLeft:NO
-                                                 backgroundColor:UIColor.redColor
-                                                             tag:[NSNumber numberWithUnsignedInteger:index]
-                                                 insideContainer:NO
-                                                    atEdgeCorner:YES
-                                                       alignment:LKTNotificationBadgeAlignmentRight];
+  LKTNotificationBadge *badge = [[LKTNotificationBadge alloc] initBadgeToSuperView:tile
+                                                                          withText:tile.labelTitle.text
+                                                                              font:nil
+                                                                         textColor:UIColor.whiteColor
+                                                         isTextLanguageRightToLeft:NO
+                                                                   backgroundColor:UIColor.redColor
+                                                                               tag:[NSNumber numberWithUnsignedInteger:index]
+                                                                   insideContainer:NO
+                                                                      atEdgeCorner:YES
+                                                                         alignment:LKTNotificationBadgeAlignmentRight];
   
+  [tile addSubview:badge];
   
   return tile;
 }
@@ -145,8 +142,6 @@
 
 - (void)tableView:(LKTHorizontalTableView *)tableView didSelectTileAtIndex:(NSUInteger)index {
   NSLog(@"\n\n****************************************************\nView selected : %@\n****************************************************\n\n", [NSString stringWithFormat:@"%@", [_arrayFiguresTo4 objectAtIndex:index]]);
-  
-  [[LKTNotificationBadge sharedInstance] removeBadgeForTag:[NSNumber numberWithUnsignedInteger:index]];
 }
 
 @end
