@@ -34,6 +34,12 @@
 @property (strong, nonatomic) LKTHorizontalTableView *tableViewTo4;
 @property (strong, nonatomic) LKTTileCell *tileCell;
 @property (strong, nonatomic) NSMutableArray *arrayFiguresTo4;
+@property (strong, nonatomic) UIButton *buttonIncrement;
+@property (strong, nonatomic) UIButton *buttonDecrement;
+@property (strong, nonatomic) UIButton *buttonAddBadge;
+@property (strong, nonatomic) UIButton *buttonDeleteBadge;
+@property (strong, nonatomic) LKTNotificationBadge *badgeButton;
+@property (strong, nonatomic) NSNumber *badgeButtonCounter;
 
 @end
 
@@ -51,6 +57,93 @@
     i += 1;
   }
   
+  _buttonIncrement = [[UIButton alloc] init];
+  _buttonIncrement.backgroundColor = UIColor.blackColor;
+  _buttonIncrement.translatesAutoresizingMaskIntoConstraints = NO;
+  _buttonIncrement.titleLabel.textColor = UIColor.redColor;
+  [_buttonIncrement setTitle:@"Increment badge"
+                    forState:UIControlStateNormal];
+  [_buttonIncrement addTarget:self action:@selector(incrementBadge)
+    forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:_buttonIncrement];
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-100-[_buttonIncrement]-100-|"
+                                                                    options:NSLayoutFormatDirectionLeftToRight
+                                                                    metrics:nil
+                                                                      views:NSDictionaryOfVariableBindings(_buttonIncrement)]];
+  
+  _buttonDecrement = [[UIButton alloc] init];
+  _buttonDecrement.backgroundColor = UIColor.blackColor;
+  _buttonDecrement.translatesAutoresizingMaskIntoConstraints = NO;
+  _buttonDecrement.titleLabel.textColor = UIColor.redColor;
+  [_buttonDecrement setTitle:@"Decrement badge"
+                    forState:UIControlStateNormal];
+  [_buttonDecrement addTarget:self action:@selector(decrementBadge)
+             forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:_buttonDecrement];
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-100-[_buttonDecrement]-100-|"
+                                                                    options:NSLayoutFormatDirectionLeftToRight
+                                                                    metrics:nil
+                                                                      views:NSDictionaryOfVariableBindings(_buttonDecrement)]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-100-[_buttonIncrement(50)]-15-[_buttonDecrement(50)]"
+                                                                    options:NSLayoutFormatDirectionLeftToRight
+                                                                    metrics:nil
+                                                                      views:NSDictionaryOfVariableBindings(_buttonIncrement, _buttonDecrement)]];
+  
+  _buttonAddBadge = [[UIButton alloc] init];
+  _buttonAddBadge.backgroundColor = UIColor.blackColor;
+  _buttonAddBadge.translatesAutoresizingMaskIntoConstraints = NO;
+  _buttonAddBadge.titleLabel.textColor = UIColor.redColor;
+  [_buttonAddBadge setTitle:@"Add badge"
+                    forState:UIControlStateNormal];
+  [_buttonAddBadge addTarget:self action:@selector(addBadge)
+             forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:_buttonAddBadge];
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-100-[_buttonAddBadge]-100-|"
+                                                                    options:NSLayoutFormatDirectionLeftToRight
+                                                                    metrics:nil
+                                                                      views:NSDictionaryOfVariableBindings(_buttonAddBadge)]];
+  
+  _buttonDeleteBadge = [[UIButton alloc] init];
+  _buttonDeleteBadge.backgroundColor = UIColor.blackColor;
+  _buttonDeleteBadge.translatesAutoresizingMaskIntoConstraints = NO;
+  _buttonDeleteBadge.titleLabel.textColor = UIColor.redColor;
+  [_buttonDeleteBadge setTitle:@"Delete badge"
+                   forState:UIControlStateNormal];
+  [_buttonDeleteBadge addTarget:self action:@selector(deleteBadge)
+            forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:_buttonDeleteBadge];
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-100-[_buttonDeleteBadge]-100-|"
+                                                                    options:NSLayoutFormatDirectionLeftToRight
+                                                                    metrics:nil
+                                                                      views:NSDictionaryOfVariableBindings(_buttonDeleteBadge)]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-100-[_buttonIncrement(50)]-15-[_buttonDecrement(50)]-15-[_buttonAddBadge(50)]-15-[_buttonDeleteBadge(50)]"
+                                                                    options:NSLayoutFormatDirectionLeftToRight
+                                                                    metrics:nil
+                                                                      views:NSDictionaryOfVariableBindings(_buttonIncrement, _buttonDecrement, _buttonAddBadge, _buttonDeleteBadge)]];
+  
+  
+  _badgeButtonCounter = [NSNumber numberWithLong:0];
+  
+  [self.view setNeedsLayout];
+  [self.view layoutIfNeeded];
+  
+  _badgeButton = [[LKTNotificationBadge alloc] initBadgeToSuperView:_buttonIncrement
+                                                           withText:[NSString stringWithFormat:@"%lld", _badgeButtonCounter.longLongValue]
+                                                               font:nil
+                                                          textColor:UIColor.whiteColor
+                                          isTextLanguageRightToLeft:NO
+                                                    backgroundColor:UIColor.redColor
+                                                                tag:[NSNumber numberWithInt:999]
+                                                    insideContainer:NO
+                                                       atEdgeCorner:YES
+                                                          alignment:LKTNotificationBadgeAlignmentRight];
+  [_buttonIncrement addSubview:_badgeButton];
+  
+  
   _tableViewTo4 = [[LKTHorizontalTableView alloc] init];
   _tableViewTo4.translatesAutoresizingMaskIntoConstraints = NO;
   _tableViewTo4.tag = 4;
@@ -67,6 +160,49 @@
                                                                       views:NSDictionaryOfVariableBindings(_tableViewTo4)]];
   
   [_tableViewTo4 loadViewWithData];
+}
+
+- (void)incrementBadge {
+  long counter = _badgeButtonCounter.longLongValue;
+  _badgeButtonCounter = [NSNumber numberWithLong:counter + 1];
+  [_badgeButton.label setText:[NSString stringWithFormat:@"%lld", _badgeButtonCounter.longLongValue]];
+}
+
+- (void)decrementBadge {
+  long counter = _badgeButtonCounter.longLongValue;
+  
+  if (counter) {
+    _badgeButtonCounter = [NSNumber numberWithLong:counter - 1];
+    [_badgeButton.label setText:[NSString stringWithFormat:@"%lld", _badgeButtonCounter.longLongValue]];
+  } else
+    NSLog(@"Counter cannot be negative !");
+}
+
+- (void)addBadge {
+  if (!_badgeButton) {
+    _badgeButtonCounter = [NSNumber numberWithLong:0];
+    
+    [self.view setNeedsLayout];
+    [self.view layoutIfNeeded];
+    
+    _badgeButton = [[LKTNotificationBadge alloc] initBadgeToSuperView:_buttonIncrement
+                                                             withText:[NSString stringWithFormat:@"%lld", _badgeButtonCounter.longLongValue]
+                                                                 font:nil
+                                                            textColor:UIColor.whiteColor
+                                            isTextLanguageRightToLeft:NO
+                                                      backgroundColor:UIColor.redColor
+                                                                  tag:[NSNumber numberWithInt:999]
+                                                      insideContainer:NO
+                                                         atEdgeCorner:YES
+                                                            alignment:LKTNotificationBadgeAlignmentRight];
+    [_buttonIncrement addSubview:_badgeButton];
+  } else
+    NSLog(@"The badge exists already ! :)");
+}
+
+- (void)deleteBadge {
+  [_badgeButton removeFromSuperview];
+  _badgeButton = nil;
 }
 
 - (void)didReceiveMemoryWarning {
