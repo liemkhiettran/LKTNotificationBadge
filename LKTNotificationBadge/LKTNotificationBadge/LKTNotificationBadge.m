@@ -42,7 +42,6 @@
                            alignment:(LKTNotificationBadgeAlignment)alignment {
   
     CGRect superViewframe = superView.frame;
-    __unused CGFloat interMargin = 5.f;
     
     CGFloat badgeWidth = 0.f;
     if (text.length >= 3)
@@ -99,14 +98,26 @@
                                            badgeHeight)];
   
   if (self) {
-    self.textColor = textColor ? textColor : UIColor.whiteColor;
-    self.textAlignment = NSTextAlignmentCenter;
-    self.text = text.length > 2 ? @"99+" : text;
-    self.backgroundColor = backgroundColor ? backgroundColor : UIColor.redColor;
-    [self setFont:font ? font : [UIFont boldSystemFontOfSize:14]];
-    self.adjustsFontSizeToFitWidth = YES;
-    self.clipsToBounds = YES;
-    self.layer.cornerRadius = self.frame.size.width / 2;
+    
+    self.backgroundColor = UIColor.clearColor;
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    _label = [[UILabel alloc] initWithFrame:CGRectMake(0,
+                                                       0,
+                                                       self.frame.size.width,
+                                                       self.frame.size.height)];
+    [self addSubview:_label];
+    [self bringSubviewToFront:_label];
+    
+    _label.textColor = textColor ? textColor : UIColor.whiteColor;
+    _label.textAlignment = NSTextAlignmentCenter;
+    _label.text = text.length > 2 ? @"99+" : text;
+    _label.backgroundColor = UIColor.redColor;
+    [_label setFont:font ? font : [UIFont boldSystemFontOfSize:14]];
+    _label.adjustsFontSizeToFitWidth = YES;
+    _label.clipsToBounds = YES;
+    self.layer.cornerRadius =
+    _label.layer.cornerRadius = self.frame.size.width / 2;
     self.tag = tag.unsignedIntegerValue;
   }
   

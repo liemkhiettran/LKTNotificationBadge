@@ -23,8 +23,9 @@ typedef NS_ENUM(NSInteger, LKTNotificationBadgeAlignment) {
   LKTNotificationBadgeAlignmentRight     = 2,    // Visually right aligned
 };
 
-@interface LKTNotificationBadge : UILabel
+@interface LKTNotificationBadge : UIView
 
+@property (strong, nonatomic) UILabel *label;
 @property (strong, nonatomic) NSMutableArray *mutableArrayBadges;
 
 //***************************************************************************************************
