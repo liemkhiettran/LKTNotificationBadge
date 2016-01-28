@@ -26,7 +26,6 @@ typedef NS_ENUM(NSInteger, LKTNotificationBadgeAlignment) {
 @interface LKTNotificationBadge : UIView
 
 @property (strong, nonatomic) UILabel *label;
-@property (strong, nonatomic) NSMutableArray *mutableArrayBadges;
 
 //***************************************************************************************************
 // ADD AN IN-APP NOTIFICATION BADGE LABEL TO THE SUPER VIEW PASSED IN PARAMETER
